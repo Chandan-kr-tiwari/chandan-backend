@@ -10,6 +10,7 @@
 // import {DB_NAME} from "./constants"
 import dotenv from "dotenv"
 import connectDb from "./db/index.js"
+import { app } from "./app.js"
 // import { config } from "dotenv"
 
 dotenv.config({
@@ -23,7 +24,18 @@ dotenv.config({
 
 
 
-connectDb()
+connectDb() // since it is asynchronous task so it will return promise 
+// handling promise now 
+
+.then(()=>{
+   app.listen(process.env.PORT||8000,()=>{
+    console.log(`server started listening on ${process.env.PORT}`
+    )
+   })
+})
+
+.catch((err)=>{
+    console.log("Mongo db connection failed!!! ", err)})
 
 
 
